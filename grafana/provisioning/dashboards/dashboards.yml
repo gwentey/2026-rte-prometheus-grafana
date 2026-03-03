@@ -1,0 +1,7 @@
+apiVersion: 1
+providers:
+  - name: ECP Dashboards
+    folder: ECP
+    type: file
+    options:
+      path: /etc/grafana/provisioning/dashboards
