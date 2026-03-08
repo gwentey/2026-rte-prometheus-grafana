@@ -20,11 +20,11 @@ scrape_configs:
         labels:
           component: 'monitoring'
 
-  # Target 2 : Simulation d'un ECP Endpoint (on créera l'exporter au BLOC 2)
-  - job_name: 'ecp_endpoint'
+  # Target 2 : ECP Network Monitor (remplace ecp_simulator.py)
+  - job_name: 'ecp_network_monitor'
     scrape_interval: 10s
-    metrics_path: '/metrics'  # Même path que les vrais ECP
+    metrics_path: '/metrics'
     static_configs:
-      - targets: ['host.docker.internal:8004']
+      - targets: ['ecp-network-monitor:4000']
         labels:
-          component: 'endpoint'
+          component: 'network_monitor'

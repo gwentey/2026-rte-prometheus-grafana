@@ -1,0 +1,75 @@
+{
+  "attributes": {
+    "title": "Files d'attente messages (détail)",
+    "visualizationType": "lnsXY",
+    "state": {
+      "datasourceStates": {
+        "formBased": {
+          "layers": {
+            "l1": {
+              "columnOrder": ["col-time", "col-deliver", "col-receive"],
+              "columns": {
+                "col-time": {
+                  "label": "@timestamp",
+                  "dataType": "date",
+                  "operationType": "date_histogram",
+                  "sourceField": "@timestamp",
+                  "isBucketed": true,
+                  "scale": "interval",
+                  "params": {"interval": "auto", "includeEmptyRows": true, "dropPartials": false}
+                },
+                "col-deliver": {
+                  "label": "En attente livraison",
+                  "dataType": "number",
+                  "operationType": "average",
+                  "sourceField": "waiting_deliver",
+                  "isBucketed": false,
+                  "scale": "ratio",
+                  "params": {"emptyAsNull": false}
+                },
+                "col-receive": {
+                  "label": "En attente réception",
+                  "dataType": "number",
+                  "operationType": "average",
+                  "sourceField": "waiting_receive",
+                  "isBucketed": false,
+                  "scale": "ratio",
+                  "params": {"emptyAsNull": false}
+                }
+              },
+              "incompleteColumns": {},
+              "sampling": 1
+            }
+          }
+        },
+        "textBased": {"layers": {}}
+      },
+      "visualization": {
+        "legend": {"isVisible": true, "position": "bottom"},
+        "valueLabels": "hide",
+        "fittingFunction": "None",
+        "axisTitlesVisibilitySettings": {"x": false, "yLeft": true, "yRight": true},
+        "gridlinesVisibilitySettings": {"x": true, "yLeft": true, "yRight": true},
+        "preferredSeriesType": "line",
+        "layers": [
+          {
+            "layerId": "l1",
+            "accessors": ["col-deliver", "col-receive"],
+            "position": "top",
+            "seriesType": "line",
+            "showGridlines": false,
+            "layerType": "data",
+            "xAccessor": "col-time"
+          }
+        ]
+      },
+      "query": {"query": "doc_type: \"ecp\"", "language": "kuery"},
+      "filters": [],
+      "internalReferences": [],
+      "adHocDataViews": {}
+    }
+  },
+  "references": [
+    {"name": "indexpattern-datasource-layer-l1", "type": "index-pattern", "id": "ecp-metrics-dv"}
+  ]
+}

@@ -1,4 +1,11 @@
 services:
+  ecp-network-monitor:
+    build: ./ecp-network-monitor
+    container_name: ecp-network-monitor
+    ports:
+      - "4000:4000"
+    restart: unless-stopped
+
   prometheus:
     image: prom/prometheus
     container_name: prometheus
@@ -23,8 +30,48 @@ services:
       - grafana-storage:/var/lib/grafana
     environment:
       - GF_INSTALL_PLUGINS=esnet-networkmap-panel
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
     restart: unless-stopped
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    restart: unless-stopped
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.12.0
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
+
+  kibana-setup:
+    image: curlimages/curl:latest
+    container_name: kibana-setup
+    volumes:
+      - ./kibana:/kibana
+    entrypoint: ["/bin/sh", "/kibana/kibana_import.sh"]
+    depends_on:
+      - kibana
+      - elasticsearch
+    restart: on-failure
 
 volumes:
   prometheus-data:
   grafana-storage:
+  es-data:

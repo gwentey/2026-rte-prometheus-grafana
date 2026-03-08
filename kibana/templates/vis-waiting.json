@@ -1,0 +1,82 @@
+{
+  "attributes": {
+    "title": "Messages en attente de livraison",
+    "visualizationType": "lnsXY",
+    "state": {
+      "datasourceStates": {
+        "formBased": {
+          "layers": {
+            "l1": {
+              "columnOrder": ["col-time", "col-split", "col-waiting"],
+              "columns": {
+                "col-time": {
+                  "label": "@timestamp",
+                  "dataType": "date",
+                  "operationType": "date_histogram",
+                  "sourceField": "@timestamp",
+                  "isBucketed": true,
+                  "scale": "interval",
+                  "params": {"interval": "auto", "includeEmptyRows": true, "dropPartials": false}
+                },
+                "col-split": {
+                  "label": "ECP Name",
+                  "dataType": "string",
+                  "operationType": "terms",
+                  "sourceField": "ecp_name",
+                  "isBucketed": true,
+                  "scale": "ordinal",
+                  "params": {
+                    "size": 10,
+                    "orderBy": {"type": "column", "columnId": "col-waiting"},
+                    "orderDirection": "desc",
+                    "includeIsOtherBucket": false,
+                    "missingBucket": false
+                  }
+                },
+                "col-waiting": {
+                  "label": "Messages en attente livraison",
+                  "dataType": "number",
+                  "operationType": "average",
+                  "sourceField": "waiting_deliver",
+                  "isBucketed": false,
+                  "scale": "ratio",
+                  "params": {"emptyAsNull": false}
+                }
+              },
+              "incompleteColumns": {},
+              "sampling": 1
+            }
+          }
+        },
+        "textBased": {"layers": {}}
+      },
+      "visualization": {
+        "legend": {"isVisible": true, "position": "bottom"},
+        "valueLabels": "hide",
+        "fittingFunction": "None",
+        "axisTitlesVisibilitySettings": {"x": false, "yLeft": true, "yRight": true},
+        "gridlinesVisibilitySettings": {"x": true, "yLeft": true, "yRight": true},
+        "preferredSeriesType": "line",
+        "layers": [
+          {
+            "layerId": "l1",
+            "accessors": ["col-waiting"],
+            "position": "top",
+            "seriesType": "line",
+            "showGridlines": false,
+            "layerType": "data",
+            "xAccessor": "col-time",
+            "splitAccessor": "col-split"
+          }
+        ]
+      },
+      "query": {"query": "doc_type: \"ecp\"", "language": "kuery"},
+      "filters": [],
+      "internalReferences": [],
+      "adHocDataViews": {}
+    }
+  },
+  "references": [
+    {"name": "indexpattern-datasource-layer-l1", "type": "index-pattern", "id": "ecp-metrics-dv"}
+  ]
+}

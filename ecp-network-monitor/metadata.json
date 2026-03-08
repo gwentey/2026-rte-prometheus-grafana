@@ -1,0 +1,5 @@
+{
+  "name": "ECP Simulator Endpoint",
+  "description": "A real-time network cartography dashboard for monitoring ECP endpoints, routers, messages, and certificates with Prometheus integration.",
+  "requestFramePermissions": []
+}

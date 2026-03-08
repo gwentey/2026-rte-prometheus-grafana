@@ -1,0 +1,88 @@
+{
+  "attributes": {
+    "title": "Statut instance ECP",
+    "visualizationType": "lnsMetric",
+    "state": {
+      "datasourceStates": {
+        "formBased": {
+          "layers": {
+            "l1": {
+              "columnOrder": ["col-split", "col-value"],
+              "columns": {
+                "col-split": {
+                  "label": "ECP Name",
+                  "dataType": "string",
+                  "operationType": "terms",
+                  "sourceField": "ecp_name",
+                  "isBucketed": true,
+                  "scale": "ordinal",
+                  "params": {
+                    "size": 1,
+                    "orderBy": {"type": "alphabetical"},
+                    "orderDirection": "asc",
+                    "includeIsOtherBucket": false,
+                    "missingBucket": false
+                  }
+                },
+                "col-value": {
+                  "label": "Brokers connectés",
+                  "dataType": "number",
+                  "operationType": "last_value",
+                  "sourceField": "connected_brokers",
+                  "isBucketed": false,
+                  "scale": "ratio",
+                  "params": {"sortField": "@timestamp", "showArrayValues": false}
+                }
+              },
+              "incompleteColumns": {},
+              "sampling": 1
+            }
+          }
+        },
+        "textBased": {"layers": {}}
+      },
+      "visualization": {
+        "layerId": "l1",
+        "layerType": "data",
+        "metricAccessor": "col-value",
+        "breakdownByAccessor": "col-split",
+        "collapseFn": "max",
+        "titlesTextAlign": "left",
+        "valuesTextAlign": "left",
+        "iconAlign": "left",
+        "titlesTextSize": "s",
+        "valuesTextSize": "xl",
+        "showBar": false,
+        "colorMode": "background",
+        "palette": {
+          "type": "palette",
+          "name": "custom",
+          "params": {
+            "steps": 2,
+            "reverse": false,
+            "rangeType": "number",
+            "name": "custom",
+            "colorStops": [
+              {"color": "#CC5642", "stop": 0},
+              {"color": "#57A396", "stop": 0.5}
+            ],
+            "stops": [
+              {"color": "#CC5642", "stop": 0.5},
+              {"color": "#57A396", "stop": 10}
+            ],
+            "continuity": "above",
+            "rangeMin": 0,
+            "rangeMax": null
+          }
+        }
+      },
+      "query": {"query": "doc_type: \"ecp\"", "language": "kuery"},
+      "filters": [],
+      "internalReferences": [],
+      "adHocDataViews": {}
+    }
+  },
+  "references": [
+    {"name": "indexpattern-datasource-layer-l1", "type": "index-pattern", "id": "ecp-metrics-dv"}
+  ]
+}

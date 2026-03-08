@@ -1,0 +1,1 @@
+{"type":"index-pattern","id":"ecp-metrics-dv","attributes":{"title":"ecp-metrics","timeFieldName":"@timestamp","name":"ECP Metrics"},"references":[],"migrationVersion":{"index-pattern":"8.0.0"},"coreMigrationVersion":"8.12.0"}

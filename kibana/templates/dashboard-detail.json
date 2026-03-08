@@ -1,0 +1,21 @@
+{
+  "attributes": {
+    "title": "ECP Detail - Kibana",
+    "description": "Vue détaillée par instance ECP - Equivalent Grafana ecp-detail",
+    "panelsJSON": "[{\"type\":\"controls\",\"panelIndex\":\"ctrl\",\"gridData\":{\"x\":0,\"y\":0,\"w\":24,\"h\":4,\"i\":\"ctrl\"},\"version\":\"8.12.0\",\"embeddableConfig\":{\"hidePanelTitles\":true,\"enhancements\":{},\"controls\":[{\"id\":\"ctrl-ecp\",\"type\":\"optionsListControl\",\"order\":0,\"width\":\"medium\",\"grow\":true,\"explicitInput\":{\"id\":\"ctrl-ecp\",\"title\":\"ECP Name\",\"fieldName\":\"ecp_name\",\"dataViewId\":\"ecp-metrics-dv\",\"enhancements\":{}}}],\"ignoreParentSettings\":{\"ignoreFilters\":false,\"ignoreQuery\":false,\"ignoreTimerange\":false,\"ignoreValidations\":false},\"chainingSystem\":\"HIERARCHICAL\",\"labelPosition\":\"oneLine\",\"autoApplySelections\":true}},{\"type\":\"lens\",\"panelIndex\":\"p1\",\"gridData\":{\"x\":0,\"y\":4,\"w\":24,\"h\":8,\"i\":\"p1\"},\"version\":\"8.12.0\",\"embeddableConfig\":{\"savedObjectId\":\"ecp-det-status\",\"hidePanelTitles\":false,\"enhancements\":{}}},{\"type\":\"lens\",\"panelIndex\":\"p2\",\"gridData\":{\"x\":0,\"y\":12,\"w\":12,\"h\":8,\"i\":\"p2\"},\"version\":\"8.12.0\",\"embeddableConfig\":{\"savedObjectId\":\"ecp-det-heap\",\"hidePanelTitles\":false,\"enhancements\":{}}},{\"type\":\"lens\",\"panelIndex\":\"p3\",\"gridData\":{\"x\":12,\"y\":12,\"w\":12,\"h\":8,\"i\":\"p3\"},\"version\":\"8.12.0\",\"embeddableConfig\":{\"savedObjectId\":\"ecp-det-cpu\",\"hidePanelTitles\":false,\"enhancements\":{}}},{\"type\":\"lens\",\"panelIndex\":\"p4\",\"gridData\":{\"x\":0,\"y\":20,\"w\":12,\"h\":8,\"i\":\"p4\"},\"version\":\"8.12.0\",\"embeddableConfig\":{\"savedObjectId\":\"ecp-det-threads\",\"hidePanelTitles\":false,\"enhancements\":{}}},{\"type\":\"lens\",\"panelIndex\":\"p5\",\"gridData\":{\"x\":12,\"y\":20,\"w\":12,\"h\":8,\"i\":\"p5\"},\"version\":\"8.12.0\",\"embeddableConfig\":{\"savedObjectId\":\"ecp-det-queues\",\"hidePanelTitles\":false,\"enhancements\":{}}}]",
+    "timeRestore": false,
+    "timeTo": "now",
+    "timeFrom": "now-1h",
+    "refreshInterval": {"pause": false, "value": 30000},
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[]}"
+    }
+  },
+  "references": [
+    {"name": "p1", "type": "lens", "id": "ecp-det-status"},
+    {"name": "p2", "type": "lens", "id": "ecp-det-heap"},
+    {"name": "p3", "type": "lens", "id": "ecp-det-cpu"},
+    {"name": "p4", "type": "lens", "id": "ecp-det-threads"},
+    {"name": "p5", "type": "lens", "id": "ecp-det-queues"}
+  ]
+}

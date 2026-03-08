@@ -1,0 +1,91 @@
+{
+  "attributes": {
+    "title": "Throughput Messages (envoyés / reçus)",
+    "visualizationType": "lnsXY",
+    "state": {
+      "datasourceStates": {
+        "formBased": {
+          "layers": {
+            "l1": {
+              "columnOrder": ["col-time", "col-split", "col-sent", "col-received"],
+              "columns": {
+                "col-time": {
+                  "label": "@timestamp",
+                  "dataType": "date",
+                  "operationType": "date_histogram",
+                  "sourceField": "@timestamp",
+                  "isBucketed": true,
+                  "scale": "interval",
+                  "params": {"interval": "auto", "includeEmptyRows": true, "dropPartials": false}
+                },
+                "col-split": {
+                  "label": "ECP Name",
+                  "dataType": "string",
+                  "operationType": "terms",
+                  "sourceField": "ecp_name",
+                  "isBucketed": true,
+                  "scale": "ordinal",
+                  "params": {
+                    "size": 10,
+                    "orderBy": {"type": "column", "columnId": "col-sent"},
+                    "orderDirection": "desc",
+                    "includeIsOtherBucket": false,
+                    "missingBucket": false
+                  }
+                },
+                "col-sent": {
+                  "label": "Messages envoyés (total)",
+                  "dataType": "number",
+                  "operationType": "max",
+                  "sourceField": "sent_messages_total",
+                  "isBucketed": false,
+                  "scale": "ratio",
+                  "params": {"emptyAsNull": false}
+                },
+                "col-received": {
+                  "label": "Messages reçus (total)",
+                  "dataType": "number",
+                  "operationType": "max",
+                  "sourceField": "received_messages_total",
+                  "isBucketed": false,
+                  "scale": "ratio",
+                  "params": {"emptyAsNull": false}
+                }
+              },
+              "incompleteColumns": {},
+              "sampling": 1
+            }
+          }
+        },
+        "textBased": {"layers": {}}
+      },
+      "visualization": {
+        "legend": {"isVisible": true, "position": "bottom"},
+        "valueLabels": "hide",
+        "fittingFunction": "None",
+        "axisTitlesVisibilitySettings": {"x": false, "yLeft": true, "yRight": true},
+        "gridlinesVisibilitySettings": {"x": true, "yLeft": true, "yRight": true},
+        "preferredSeriesType": "line",
+        "layers": [
+          {
+            "layerId": "l1",
+            "accessors": ["col-sent", "col-received"],
+            "position": "top",
+            "seriesType": "line",
+            "showGridlines": false,
+            "layerType": "data",
+            "xAccessor": "col-time",
+            "splitAccessor": "col-split"
+          }
+        ]
+      },
+      "query": {"query": "doc_type: \"ecp\"", "language": "kuery"},
+      "filters": [],
+      "internalReferences": [],
+      "adHocDataViews": {}
+    }
+  },
+  "references": [
+    {"name": "indexpattern-datasource-layer-l1", "type": "index-pattern", "id": "ecp-metrics-dv"}
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "attributes": {
+    "title": "Jours avant expiration certificat",
+    "visualizationType": "lnsXY",
+    "state": {
+      "datasourceStates": {
+        "formBased": {
+          "layers": {
+            "l1": {
+              "columnOrder": ["col-x", "col-value"],
+              "columns": {
+                "col-x": {
+                  "label": "ECP Name",
+                  "dataType": "string",
+                  "operationType": "terms",
+                  "sourceField": "ecp_name",
+                  "isBucketed": true,
+                  "scale": "ordinal",
+                  "params": {
+                    "size": 10,
+                    "orderBy": {"type": "alphabetical"},
+                    "orderDirection": "asc",
+                    "includeIsOtherBucket": false,
+                    "missingBucket": false
+                  }
+                },
+                "col-value": {
+                  "label": "Jours avant expiration",
+                  "dataType": "number",
+                  "operationType": "average",
+                  "sourceField": "cert_expiry_days",
+                  "isBucketed": false,
+                  "scale": "ratio",
+                  "params": {"emptyAsNull": false}
+                }
+              },
+              "incompleteColumns": {},
+              "sampling": 1
+            }
+          }
+        },
+        "textBased": {"layers": {}}
+      },
+      "visualization": {
+        "legend": {"isVisible": false, "position": "bottom"},
+        "valueLabels": "show",
+        "fittingFunction": "None",
+        "axisTitlesVisibilitySettings": {"x": false, "yLeft": true, "yRight": true},
+        "gridlinesVisibilitySettings": {"x": false, "yLeft": true, "yRight": true},
+        "preferredSeriesType": "bar",
+        "layers": [
+          {
+            "layerId": "l1",
+            "accessors": ["col-value"],
+            "position": "top",
+            "seriesType": "bar",
+            "showGridlines": false,
+            "layerType": "data",
+            "xAccessor": "col-x"
+          }
+        ]
+      },
+      "query": {"query": "doc_type: \"ecp\"", "language": "kuery"},
+      "filters": [],
+      "internalReferences": [],
+      "adHocDataViews": {}
+    }
+  },
+  "references": [
+    {"name": "indexpattern-datasource-layer-l1", "type": "index-pattern", "id": "ecp-metrics-dv"}
+  ]
+}

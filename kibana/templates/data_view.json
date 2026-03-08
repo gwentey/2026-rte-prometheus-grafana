@@ -1,0 +1,9 @@
+{
+  "data_view": {
+    "id": "ecp-metrics-dv",
+    "title": "ecp-metrics",
+    "timeFieldName": "@timestamp",
+    "name": "ECP Metrics"
+  },
+  "override": true
+}

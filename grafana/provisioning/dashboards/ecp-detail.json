@@ -20,7 +20,7 @@
       },
       "targets": [
         {
-          "expr": "ecp_endpoint_connected_brokers{ecp_name=\"$ecp_instance\"} > 0",
+          "expr": "ecp_endpoint_connected_brokers{ecp_name=\"$ecp_instance\"}",
           "instant": true
         }
       ],
@@ -54,10 +54,21 @@
               "type": "value",
               "options": {
                 "0": {
-                  "text": "🔴 DOWN"
-                },
-                "1": {
-                  "text": "✅ UP"
+                  "text": "🔴 DOWN",
+                  "color": "red",
+                  "index": 0
+                }
+              }
+            },
+            {
+              "type": "range",
+              "options": {
+                "from": 1,
+                "to": 1000,
+                "result": {
+                  "text": "✅ UP",
+                  "color": "green",
+                  "index": 1
                 }
               }
             }

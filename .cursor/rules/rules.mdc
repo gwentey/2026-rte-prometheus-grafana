@@ -1,0 +1,52 @@
+---
+description: Contexte fonctionnel et technique du POC prometheus-demo
+alwaysApply: true
+---
+
+# POC — Supervision réseau ECP avec Prometheus & Grafana
+
+## Contexte fonctionnel
+
+Ce projet est un **POC de supervision temps réel** pour des endpoints réseau de type ECP (Energy Communication Platform). L'objectif est de démontrer la capacité à collecter, stocker et visualiser des métriques d'infrastructure via la stack Prometheus + Grafana, à partir d'une application simulatrice de logs et de trafic fictif.
+
+## Architecture de la stack
+
+```
+[ecp-network-monitor]  →  /metrics  →  [Prometheus :9090]  →  [Grafana :3000]
+     Node.js/Express                      scrape 10s             dashboards
+     React frontend (SPA)
+     Port 4000
+```
+
+Orchestration via **Docker Compose** (`docker-compose.yml`). Réseau interne Docker : les services communiquent par nom de service (`prometheus:9090`, `ecp-network-monitor:4000`).
+
+## Application simulatrice (`ecp-network-monitor/`)
+
+- **Backend** : Express + `prom-client` v15 — expose `/metrics` en format Prometheus text/plain
+- **Frontend** : React (Vite, port 4000) — carte réseau SVG interactive avec animation de messages en transit via SSE (`/api/stream`)
+- **Simulation** : 5 ECPs (FR, DE, ES, IT, BE) et 3 brokers (A, B, C), état UP/DOWN pilotable via UI
+- **Métriques exposées** : toutes prefixées `ecp_` — Gauges (heap JVM, CPU, brokers connectés, files d'attente, expiration certificats) + Counters (`ecp_endpoint_sent_messages_total`, `ecp_endpoint_received_messages_total`)
+
+> **Convention obligatoire** : les Counters prom-client doivent avoir un nom se terminant en `_total` pour que Prometheus les stocke correctement avec ce suffixe. Sans cela, les queries `increase()` dans Grafana retournent "No data".
+
+## Dashboards Grafana (`grafana/provisioning/dashboards/`)
+
+| Fichier | UID | Description |
+|---|---|---|
+| `ecp-global.json` | `ecp-global` | Vue globale : statuts ECPs/brokers, heap, certificats, **increase messages 2min** |
+| `ecp-detail.json` | `ecp-detail` | Détail par instance : heap JVM %, CPU, threads, queues |
+
+Variable template `${datasource}` de type `datasource` (Prometheus) — résolution automatique via la datasource par défaut.
+
+## Datasource Grafana (`grafana/provisioning/datasources/prometheus.yml`)
+
+```yaml
+url: http://prometheus:9090   # nom de service Docker interne — ne pas utiliser host.docker.internal
+isDefault: true
+```
+
+## Points de vigilance
+
+- Si le volume `grafana-storage` contient d'anciennes datasources corrompues → `docker volume rm prometheus-demo_grafana-storage` puis redémarrage
+- `depends_on: [prometheus]` sur le service `grafana` dans `docker-compose.yml` garantit l'ordre de démarrage
+- Le label `instance` dans les métriques ECP entre en conflit avec le label Prometheus → renommé `exported_instance` par Prometheus (comportement normal, sans impact sur les queries filtrées par `ecp_name`)

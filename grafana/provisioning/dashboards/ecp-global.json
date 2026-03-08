@@ -20,7 +20,7 @@
       },
       "targets": [
         {
-          "expr": "ecp_endpoint_connected_brokers{ecp_name=~\"ECP-GRT-.*\"} > 0",
+          "expr": "ecp_endpoint_connected_brokers{ecp_name=~\"ECP-GRT-.*\"}",
           "instant": true,
           "legendFormat": "{{ecp_name}}"
         }
@@ -57,11 +57,20 @@
               "options": {
                 "0": {
                   "text": "🔴 DOWN",
-                  "color": "red"
-                },
-                "1": {
+                  "color": "red",
+                  "index": 0
+                }
+              }
+            },
+            {
+              "type": "range",
+              "options": {
+                "from": 1,
+                "to": 1000,
+                "result": {
                   "text": "✅ UP",
-                  "color": "green"
+                  "color": "green",
+                  "index": 1
                 }
               }
             }
@@ -187,9 +196,9 @@
       },
       "targets": [
         {
-          "expr": "ecp_endpoint_connected_broken_brokers{ecp_name=~\"ECP-GRT-.*\"}",
+          "expr": "ecp_broker_status",
           "instant": true,
-          "legendFormat": "{{ecp_name}}"
+          "legendFormat": "{{broker_name}}"
         }
       ],
       "options": {
@@ -202,18 +211,18 @@
       },
       "fieldConfig": {
         "defaults": {
-          "displayName": "${__field.labels.ecp_name}",
+          "displayName": "${__field.labels.broker_name}",
           "color": {
             "mode": "thresholds"
           },
           "thresholds": {
             "steps": [
               {
-                "color": "green",
+                "color": "red",
                 "value": null
               },
               {
-                "color": "red",
+                "color": "green",
                 "value": 1
               }
             ]
@@ -223,12 +232,21 @@
               "type": "value",
               "options": {
                 "0": {
+                  "text": "🔴 EN ERREUR",
+                  "color": "red",
+                  "index": 0
+                }
+              }
+            },
+            {
+              "type": "range",
+              "options": {
+                "from": 1,
+                "to": 1,
+                "result": {
                   "text": "✅ OK",
-                  "color": "green"
-                },
-                "1": {
-                  "text": "🔴 BROKER EN ERREUR",
-                  "color": "red"
+                  "color": "green",
+                  "index": 1
                 }
               }
             }

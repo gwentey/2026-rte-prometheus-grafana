@@ -1,0 +1,67 @@
+{
+  "attributes": {
+    "title": "CPU Process % (détail)",
+    "visualizationType": "lnsXY",
+    "state": {
+      "datasourceStates": {
+        "formBased": {
+          "layers": {
+            "l1": {
+              "columnOrder": ["col-time", "col-value"],
+              "columns": {
+                "col-time": {
+                  "label": "@timestamp",
+                  "dataType": "date",
+                  "operationType": "date_histogram",
+                  "sourceField": "@timestamp",
+                  "isBucketed": true,
+                  "scale": "interval",
+                  "params": {"interval": "auto", "includeEmptyRows": true, "dropPartials": false}
+                },
+                "col-value": {
+                  "label": "CPU %",
+                  "dataType": "number",
+                  "operationType": "average",
+                  "sourceField": "cpu_usage",
+                  "isBucketed": false,
+                  "scale": "ratio",
+                  "params": {"emptyAsNull": false}
+                }
+              },
+              "incompleteColumns": {},
+              "sampling": 1
+            }
+          }
+        },
+        "textBased": {"layers": {}}
+      },
+      "visualization": {
+        "legend": {"isVisible": false, "position": "bottom"},
+        "valueLabels": "hide",
+        "fittingFunction": "None",
+        "axisTitlesVisibilitySettings": {"x": false, "yLeft": true, "yRight": true},
+        "gridlinesVisibilitySettings": {"x": true, "yLeft": true, "yRight": true},
+        "preferredSeriesType": "line",
+        "yLeftExtent": {"mode": "custom", "lowerBound": 0, "upperBound": 100},
+        "layers": [
+          {
+            "layerId": "l1",
+            "accessors": ["col-value"],
+            "position": "top",
+            "seriesType": "line",
+            "showGridlines": false,
+            "layerType": "data",
+            "xAccessor": "col-time"
+          }
+        ]
+      },
+      "query": {"query": "doc_type: \"ecp\"", "language": "kuery"},
+      "filters": [],
+      "internalReferences": [],
+      "adHocDataViews": {}
+    }
+  },
+  "references": [
+    {"name": "indexpattern-datasource-layer-l1", "type": "index-pattern", "id": "ecp-metrics-dv"}
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "attributes": {
+    "title": "ECP Global - Kibana",
+    "description": "Vue globale des ECPs - Equivalent Grafana ecp-global",
+    "panelsJSON": "[{\"type\":\"lens\",\"panelIndex\":\"p1\",\"gridData\":{\"x\":0,\"y\":0,\"w\":24,\"h\":8,\"i\":\"p1\"},\"version\":\"8.12.0\",\"embeddableConfig\":{\"savedObjectId\":\"ecp-vis-status\",\"hidePanelTitles\":false,\"enhancements\":{}}},{\"type\":\"lens\",\"panelIndex\":\"p2\",\"gridData\":{\"x\":0,\"y\":8,\"w\":12,\"h\":8,\"i\":\"p2\"},\"version\":\"8.12.0\",\"embeddableConfig\":{\"savedObjectId\":\"ecp-vis-heap\",\"hidePanelTitles\":false,\"enhancements\":{}}},{\"type\":\"lens\",\"panelIndex\":\"p3\",\"gridData\":{\"x\":12,\"y\":8,\"w\":12,\"h\":8,\"i\":\"p3\"},\"version\":\"8.12.0\",\"embeddableConfig\":{\"savedObjectId\":\"ecp-vis-waiting\",\"hidePanelTitles\":false,\"enhancements\":{}}},{\"type\":\"lens\",\"panelIndex\":\"p4\",\"gridData\":{\"x\":0,\"y\":16,\"w\":12,\"h\":8,\"i\":\"p4\"},\"version\":\"8.12.0\",\"embeddableConfig\":{\"savedObjectId\":\"ecp-vis-brokers\",\"hidePanelTitles\":false,\"enhancements\":{}}},{\"type\":\"lens\",\"panelIndex\":\"p5\",\"gridData\":{\"x\":12,\"y\":16,\"w\":12,\"h\":8,\"i\":\"p5\"},\"version\":\"8.12.0\",\"embeddableConfig\":{\"savedObjectId\":\"ecp-vis-certs\",\"hidePanelTitles\":false,\"enhancements\":{}}},{\"type\":\"lens\",\"panelIndex\":\"p6\",\"gridData\":{\"x\":0,\"y\":24,\"w\":24,\"h\":8,\"i\":\"p6\"},\"version\":\"8.12.0\",\"embeddableConfig\":{\"savedObjectId\":\"ecp-vis-messages\",\"hidePanelTitles\":false,\"enhancements\":{}}}]",
+    "timeRestore": false,
+    "timeTo": "now",
+    "timeFrom": "now-1h",
+    "refreshInterval": {"pause": false, "value": 30000},
+    "kibanaSavedObjectMeta": {
+      "searchSourceJSON": "{\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[]}"
+    }
+  },
+  "references": [
+    {"name": "p1", "type": "lens", "id": "ecp-vis-status"},
+    {"name": "p2", "type": "lens", "id": "ecp-vis-heap"},
+    {"name": "p3", "type": "lens", "id": "ecp-vis-waiting"},
+    {"name": "p4", "type": "lens", "id": "ecp-vis-brokers"},
+    {"name": "p5", "type": "lens", "id": "ecp-vis-certs"},
+    {"name": "p6", "type": "lens", "id": "ecp-vis-messages"}
+  ]
+}
